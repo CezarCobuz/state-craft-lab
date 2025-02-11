@@ -1,58 +1,57 @@
 import React from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useIconStore } from "@/store/store";
 import { isValidMaterialIcon } from "@/utils/validateIcon";
-import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function IconsScreen() {
   const { iconName, iconColor, numberOfIcons } = useIconStore();
 
-  // Fallback to "star" if the icon name is invalid
   const validIconName = isValidMaterialIcon(iconName) ? iconName : "star";
-  const iconsToRender = parseInt(numberOfIcons) || 0; // Convert here
+  const iconsToRender = parseInt(numberOfIcons.toString()) || 0;
 
   return (
-    <SafeAreaView>
-      <ScrollView contentContainerStyle={styles.container}>
-        <ThemedText style={styles.title}>Your Icons</ThemedText>
+    <SafeAreaView style={styles.container}>
+      <ThemedText style={styles.title}>Your Icons</ThemedText>
 
-        <ThemedView style={styles.iconWrapper}>
-          {Array.from({ length: iconsToRender }).map((_, index) => (
-            <MaterialIcons
-              key={index}
-              name={validIconName}
-              size={50}
-              color={iconColor || "black"}
-              style={styles.icon}
-            />
-          ))}
-        </ThemedView>
-      </ScrollView>
+      <FlatList
+        data={Array.from({ length: iconsToRender })}
+        keyExtractor={(_, index) => `${validIconName}-${index}`}
+        numColumns={4}
+        contentContainerStyle={styles.iconWrapper}
+        renderItem={() => (
+          <MaterialIcons
+            name={validIconName}
+            size={50}
+            color={iconColor || "black"}
+            style={styles.icon}
+          />
+        )}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 20,
     backgroundColor: "#f9f9f9",
-    alignItems: "center",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+    textAlign: "center",
   },
   iconWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
     justifyContent: "center",
-    gap: 10,
   },
   icon: {
     margin: 8,
+    flex: 1,
+    textAlign: "center",
   },
 });
