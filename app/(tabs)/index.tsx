@@ -1,12 +1,11 @@
 import { ExternalLink } from "@/components/ExternalLink";
 import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 import { useIconStore } from "@/store/store";
 import { isValidMaterialIcon } from "@/utils/validateIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
   TextInput,
   StyleSheet,
   ScrollView,
@@ -43,10 +42,10 @@ export default function HomeScreen() {
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Icon Configuration</Text>
+        <ThemedText style={styles.title}>Icon Configuration</ThemedText>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Icon Name:</Text>
+        <ThemedView style={styles.inputGroup}>
+          <ThemedText style={styles.label}>Icon Name:</ThemedText>
 
           <TextInput
             style={styles.input}
@@ -58,25 +57,27 @@ export default function HomeScreen() {
             }}
             onBlur={validateIconName}
           />
-          {iconError && <Text style={styles.errorText}>{iconError}</Text>}
+          {iconError && <ThemedText style={styles.errorText}>{iconError}</ThemedText>}
 
           <ExternalLink href="https://fonts.google.com/icons">
-            <ThemedText type="link">see MaterialIcons possible names here</ThemedText>
+            <ThemedText type="link">
+              see MaterialIcons possible names here
+            </ThemedText>
           </ExternalLink>
-        </View>
+        </ThemedView>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Icon Color:</Text>
+        <ThemedView style={styles.inputGroup}>
+          <ThemedText style={styles.label}>Icon Color:</ThemedText>
           <TextInput
             style={styles.input}
             value={iconColor}
             placeholder="Enter Icon Color (e.g., red, blue, #00ff00)"
             onChangeText={setIconColor}
           />
-        </View>
+        </ThemedView>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Number of Icons:</Text>
+        <ThemedView style={styles.inputGroup}>
+          <ThemedText style={styles.label}>Number of Icons:</ThemedText>
           <TextInput
             style={styles.input}
             value={numberOfIcons}
@@ -84,7 +85,7 @@ export default function HomeScreen() {
             placeholder="Enter number of icons"
             onChangeText={setNumberOfIcons}
           />
-        </View>
+        </ThemedView>
       </ScrollView>
     </SafeAreaView>
   );
