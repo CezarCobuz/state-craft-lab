@@ -1,3 +1,5 @@
+import { ExternalLink } from "@/components/ExternalLink";
+import { ThemedText } from "@/components/ThemedText";
 import { useIconStore } from "@/store/store";
 import { isValidMaterialIcon } from "@/utils/validateIcon";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -30,7 +32,9 @@ export default function HomeScreen() {
 
   const validateIconName = () => {
     if (iconName.trim() !== "" && !isValidMaterialIcon(iconName.trim())) {
-      setIconError("Invalid icon name. Please enter a valid Material Icon name.");
+      setIconError(
+        "Invalid icon name. Please enter a valid Material Icon name."
+      );
     } else {
       setIconError(null);
     }
@@ -43,6 +47,7 @@ export default function HomeScreen() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Icon Name:</Text>
+
           <TextInput
             style={styles.input}
             value={iconName}
@@ -54,6 +59,10 @@ export default function HomeScreen() {
             onBlur={validateIconName}
           />
           {iconError && <Text style={styles.errorText}>{iconError}</Text>}
+
+          <ExternalLink href="https://fonts.google.com/icons">
+            <ThemedText type="link">see MaterialIcons possible names here</ThemedText>
+          </ExternalLink>
         </View>
 
         <View style={styles.inputGroup}>
