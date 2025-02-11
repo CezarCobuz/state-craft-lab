@@ -1,22 +1,32 @@
-import { View, Text, StyleSheet } from "react-native";
+import { OtpInput } from "@/components/OtpInput/OtpInput";
+import { OTP_LENGTH } from "@/constants/otp";
+import { useState } from "react";
+import { StyleSheet, Alert, Button, SafeAreaView } from "react-native";
 
-export default function OTPScreen() {
+export default function OtpScreen() {
+  const [otp, setOtp] = useState<string[]>(new Array(OTP_LENGTH).fill(""));
+
+  const handleSubmit = () => {
+    Alert.alert("Submitted OTP", otp.join(""));
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>OTP Screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <OtpInput otp={otp} setOtp={setOtp} />
+      <Button
+        title="Submit"
+        onPress={handleSubmit}
+        disabled={otp.join("").length < OTP_LENGTH}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    padding: 20,
     alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  text: {
-    fontSize: 20,
-    color: "#333",
+    justifyContent: "center",
+    flex: 1,
   },
 });
