@@ -1,7 +1,8 @@
 import { OTP_LENGTH } from "@/constants/otp";
 import React, { useRef, useEffect, memo, RefObject } from "react";
-import { View, TextInput, StyleSheet, Alert } from "react-native";
+import { TextInput, StyleSheet, Alert } from "react-native";
 import { OtpCell } from "./components/OtpCell";
+import { ThemedView } from "../ThemedView";
 
 export const OtpInput = ({
   otp,
@@ -25,7 +26,7 @@ export const OtpInput = ({
   }, [otp]);
 
   return (
-    <View style={styles.row}>
+    <ThemedView style={styles.row}>
       {Array.from({ length: OTP_LENGTH }).map((_, i) => (
         <OtpCell
           key={i}
@@ -35,7 +36,7 @@ export const OtpInput = ({
           inputsRef={inputsRef}
         />
       ))}
-    </View>
+    </ThemedView>
   );
 };
 
