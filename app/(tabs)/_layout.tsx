@@ -7,6 +7,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { DynamicTabIcon } from "@/components/DynamicTabIcon";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -35,24 +36,15 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: "Explore",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
-          ),
-        }}
-      />
+
       <Tabs.Screen
         name="icons"
         options={{
           title: "Icons",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperclip.circle.fill" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <DynamicTabIcon color={color} />,
         }}
       />
+
       <Tabs.Screen
         name="otp"
         options={{

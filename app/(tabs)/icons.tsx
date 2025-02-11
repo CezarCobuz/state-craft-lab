@@ -9,13 +9,14 @@ export default function IconsScreen() {
 
   // Fallback to "star" if the icon name is invalid
   const validIconName = isValidMaterialIcon(iconName) ? iconName : "star";
+  const iconsToRender = parseInt(numberOfIcons) || 0; // Convert here
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Your Icons</Text>
 
       <View style={styles.iconWrapper}>
-        {Array.from({ length: numberOfIcons }).map((_, index) => (
+        {Array.from({ length: iconsToRender }).map((_, index) => (
           <MaterialIcons
             key={index}
             name={validIconName}

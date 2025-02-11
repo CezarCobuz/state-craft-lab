@@ -1,5 +1,9 @@
+import { ExternalLink } from "@/components/ExternalLink";
+import { ThemedText } from "@/components/ThemedText";
 import { useIconStore } from "@/store/store";
-import React from "react";
+import { isValidMaterialIcon } from "@/utils/validateIcon";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +23,23 @@ export default function HomeScreen() {
     setNumberOfIcons,
   } = useIconStore();
 
+  // Debugging
+  // useEffect(() => {
+  //   AsyncStorage.clear();
+  // }, []);
+
+  const [iconError, setIconError] = useState<string | null>(null);
+
+  const validateIconName = () => {
+    if (iconName.trim() !== "" && !isValidMaterialIcon(iconName.trim())) {
+      setIconError(
+        "Invalid icon name. Please enter a valid Material Icon name."
+      );
+    } else {
+      setIconError(null);
+    }
+  };
+
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.container}>
@@ -26,12 +47,22 @@ export default function HomeScreen() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Icon Name:</Text>
+
           <TextInput
             style={styles.input}
             value={iconName}
             placeholder="Enter Icon Name (e.g., star, home)"
-            onChangeText={setIconName}
+            onChangeText={(text) => {
+              setIconName(text);
+              setIconError(null);
+            }}
+            onBlur={validateIconName}
           />
+          {iconError && <Text style={styles.errorText}>{iconError}</Text>}
+
+          <ExternalLink href="https://fonts.google.com/icons">
+            <ThemedText type="link">see MaterialIcons possible names here</ThemedText>
+          </ExternalLink>
         </View>
 
         <View style={styles.inputGroup}>
@@ -48,10 +79,10 @@ export default function HomeScreen() {
           <Text style={styles.label}>Number of Icons:</Text>
           <TextInput
             style={styles.input}
-            value={numberOfIcons.toString()}
+            value={numberOfIcons}
             keyboardType="numeric"
             placeholder="Enter number of icons"
-            onChangeText={(text) => setNumberOfIcons(parseInt(text) || 1)}
+            onChangeText={setNumberOfIcons}
           />
         </View>
       </ScrollView>
@@ -85,5 +116,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     backgroundColor: "#fff",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    marginTop: 4,
   },
 });

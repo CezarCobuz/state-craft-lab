@@ -4,32 +4,34 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 type State = {
   iconName: string;
   iconColor: string;
-  numberOfIcons: number;
+  numberOfIcons: string;
   setIconName: (name: string) => void;
   setIconColor: (color: string) => void;
-  setNumberOfIcons: (count: number) => void;
+  setNumberOfIcons: (count: string) => void;
   loadFromStorage: () => void;
 };
 
 export const useIconStore = create<State>((set) => ({
   iconName: "",
   iconColor: "",
-  numberOfIcons: 1,
+  numberOfIcons: "1",
 
   setIconName: (name) => {
-    set({ iconName: name });
+    const lowercasedName = name.toLowerCase();
+
+    set({ iconName: lowercasedName });
     AsyncStorage.setItem("iconName", name);
   },
 
   setIconColor: (color) => {
-    set({ iconColor: color });
-    AsyncStorage.setItem("iconColor", color);
+    const lowercasedColor = color.toLowerCase();
+    set({ iconColor: lowercasedColor });
+    AsyncStorage.setItem("iconColor", lowercasedColor);
   },
 
   setNumberOfIcons: (count) => {
-    const validCount = Math.max(1, count);
-    set({ numberOfIcons: validCount });
-    AsyncStorage.setItem("numberOfIcons", validCount.toString());
+    set({ numberOfIcons: count });
+    AsyncStorage.setItem("numberOfIcons", count);
   },
 
   loadFromStorage: async () => {
@@ -42,7 +44,7 @@ export const useIconStore = create<State>((set) => ({
     set({
       iconName: iconName || "",
       iconColor: iconColor || "",
-      numberOfIcons: numberOfIcons ? parseInt(numberOfIcons, 10) : 1,
+      numberOfIcons: numberOfIcons || "1",
     });
   },
 }));
