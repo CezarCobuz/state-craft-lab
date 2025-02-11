@@ -1,8 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useIconStore } from "@/store/store";
 import { isValidMaterialIcon } from "@/utils/validateIcon";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function IconsScreen() {
   const { iconName, iconColor, numberOfIcons } = useIconStore();
@@ -12,21 +15,23 @@ export default function IconsScreen() {
   const iconsToRender = parseInt(numberOfIcons) || 0; // Convert here
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Your Icons</Text>
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={styles.container}>
+        <ThemedText style={styles.title}>Your Icons</ThemedText>
 
-      <View style={styles.iconWrapper}>
-        {Array.from({ length: iconsToRender }).map((_, index) => (
-          <MaterialIcons
-            key={index}
-            name={validIconName}
-            size={50}
-            color={iconColor || "black"}
-            style={styles.icon}
-          />
-        ))}
-      </View>
-    </ScrollView>
+        <ThemedView style={styles.iconWrapper}>
+          {Array.from({ length: iconsToRender }).map((_, index) => (
+            <MaterialIcons
+              key={index}
+              name={validIconName}
+              size={50}
+              color={iconColor || "black"}
+              style={styles.icon}
+            />
+          ))}
+        </ThemedView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
