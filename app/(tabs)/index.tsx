@@ -1,5 +1,5 @@
 import { useIconStore } from "@/store/store";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
